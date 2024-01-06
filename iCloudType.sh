@@ -13,7 +13,7 @@ loggedInUser=$(stat -f%Su /dev/console)
 
 icloudaccount=$( defaults read /Users/"$loggedInUser"/Library/Preferences/MobileMeAccounts.plist Accounts | grep AccountID | cut -d '"' -f 2)​
 
-if [[ "$icloudaccount" =~ ".*@appleid\.thefirstacademy\.org" ]]; then
+if [[ "$icloudaccount" =~ ".*@appleid\.yourdomain\.org" ]]; then
     echo "<result>MAID</result>"
 elif [[ "$icloudaccount" ]]; then
     echo "<result>Personal</result>"
