@@ -8,16 +8,19 @@
 # https://github.com/keithemyers/Jamf_ExtAttributes
 ##################################################################################
 
-loggedInUser=$(stat -f%Su /dev/console)
+loggedInUser=$( defaults read /Library/Preferences/com.apple.loginwindow lastUserName)
 
 icloudaccount=$( defaults read /Users/"$loggedInUser"/Library/Preferences/MobileMeAccounts.plist Accounts | grep AccountID | cut -d '"' -f 2)​
 
-if [[ "$icloudaccount" =~ ".*@appleid\.yourdomain\.org" ]]; then
+
+if [[ "$icloudaccount" =~ .*@appleid\.yourdomain\.org ]]; then
     echo "<result>MAID</result>"
-elif [[ "$icloudaccount" ]]; then
+    exit 0
+elif [[ -z "$icloudaccount" ]]; then
     echo "<result>Personal</result>"
 else
     echo "<result>Not logged on</result>"
 fi
+
 
 exit 0
